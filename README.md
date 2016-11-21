@@ -32,9 +32,10 @@ public-read 		Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS000000ANONYMOUSE
 public-read-write 	Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS000000ANONYMOUSE权限 = READ + WRITE
 authenticated-read 	Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS0000000CANONICAL权限 = READ
 GRPS0000000CANONICAL：此组表示所有的新浪云存储注册帐户。
-					所有的请求必须签名（认证），如果签名认证通过，即可按照已设置的权限规则进行访问。
+					  所有的请求必须签名（认证），如果签名认证通过，即可按照已设置的权限规则进行访问。
 GRPS000000ANONYMOUSE：匿名用户组，对应的请求可以不带签名。
-SINA000000000000IMGX：图片处理服务，将您的bucket的ACL设置为对SINA000000000000IMGX的读写权限，在您使用图片处理服务的时候可以免签名。
+SINA000000000000IMGX：图片处理服务，将您的bucket的ACL设置为对		 						  SINA000000000000IMGX的读写权限，
+ 					  在您使用图片处理服务的时候可以免签名。
 ```
 
 ```
