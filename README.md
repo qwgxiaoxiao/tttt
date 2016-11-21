@@ -125,26 +125,20 @@ func (b *Bucket) PutSsk(object, uploadFile string, acl ACL) (string, error)
 ```
 func (b *Bucket) PutAcl(object string, acl map[string][]string) error
 ```   
-设置指定object 的acl, acl格式如下：
+设置指定object 的acl,当object值为"/"时，设置的是对应bucket的acl， acl格式如下：
 ```
 acl := map[string][]string{
 	"SINA000000000000IMGX": []string{"read"},
 	"GRPS000000ANONYMOUSE": []string{"read", "read_acp", "write", "write_acp"},
 	}
 ```
-当object值为"/"时，设置的是对应bucket的acl
-
 
 ```
 func (b *Bucket) PutMeta(object string, meta map[string]string) error
 ```    
-更新一个已经存在的object的附加meta信息， meta格式如下： 
+更新一个已经存在的object的附加meta信息，这个接口无法更新文件的基本信息，如文件的大小和类型等，meta格式如下： 
 
 	meta := map[string]string{"x-amz-meta-name": "sandbox", "x-amz-meta-age": "13"}
-注意：这个接口无法更新文件的基本信息，如文件的大小和类型等
-
-
-
 
 ```
 func (b *Bucket) Copy(dstObject, srcBucket, srcObject string) error
