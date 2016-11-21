@@ -234,24 +234,25 @@ func (m *Multi) Complete(partInfo []part) error
 ```
 	multi, err := bt.InitMulti("pict.tar.gz")
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 	partInfo, err := multi.PutPart("/tmp/pict.tar.gz", sdk.Private, 1024*1024*3)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 	listPart, err := multi.ListPart()
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 	for k, v := range listPart {
 		if partInfo[k].ETag != v.ETag {
 			fmt.Println("分片不匹配")
+            os.exit("xxx")
 		}
 	}
 	err = multi.Complete(partInfo)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 ```
 
