@@ -1,4 +1,4 @@
-PACKAGE DOCUMENTATION
+#PACKAGE DOCUMENTATION
 
 
     import "github.com/SinaCloudStorage/SinaCloudStorage-SDK-Go"
@@ -11,7 +11,7 @@ PACKAGE DOCUMENTATION
 		s3storage@sina.com
 
 
-CONSTANTS
+##CONSTANTS
 ```
 const (
     Private           = ACL("private")
@@ -21,7 +21,7 @@ const (
 )
 ```
 
-TYPES
+##TYPES
 ```
 type ACL string
 ```
@@ -31,7 +31,8 @@ private 			Bucket和Object 	Owner权限 = FULL_CONTROL，其他人没有任何�
 public-read 		Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS000000ANONYMOUSE权限 = READ
 public-read-write 	Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS000000ANONYMOUSE权限 = READ + WRITE
 authenticated-read 	Bucket和Object 	Owner权限 = FULL_CONTROL，GRPS0000000CANONICAL权限 = READ
-GRPS0000000CANONICAL：此组表示所有的新浪云存储注册帐户。所有的请求必须签名（认证），如果签名认证通过，即可按照已设置的权限规则进行访问。
+GRPS0000000CANONICAL：此组表示所有的新浪云存储注册帐户。
+					所有的请求必须签名（认证），如果签名认证通过，即可按照已设置的权限规则进行访问。
 GRPS000000ANONYMOUSE：匿名用户组，对应的请求可以不带签名。
 SINA000000000000IMGX：图片处理服务，将您的bucket的ACL设置为对SINA000000000000IMGX的读写权限，在您使用图片处理服务的时候可以免签名。
 ```
@@ -52,10 +53,11 @@ type Bucket struct {
 }
 ```
 
+##BUCKETS AND OBJECTS OPERATIONS
 ```
 func NewSCS(accessKey, secretKey, endPoint string) (scs *SCS)
 ```
-新创建一个SCS类
+创建一个SCS类
 
 ```
 func (scs *SCS) Bucket(name string) *Bucket
@@ -117,23 +119,30 @@ func (b *Bucket) Put(object, uploadFile string, acl ACL) error
 ```
 func (b *Bucket) PutSsk(object, uploadFile string, acl ACL) (string, error)
 ```
-以ssk的方式上传object
+以ssk的方式上传object, 返回x-sina-serverside-key
 
 ```
 func (b *Bucket) PutAcl(object string, acl map[string][]string) error
 ```   
-设置指定object 的ACL
+设置指定object 的acl, acl格式如下：
+```
+acl := map[string][]string{
+	"SINA000000000000IMGX": []string{"read"},
+	"GRPS000000ANONYMOUSE": []string{"read", "read_acp", "write", "write_acp"},
+	}
+```
+当object值为"/"时，设置的是对应bucket的acl
 
 
 ```
 func (b *Bucket) PutMeta(object string, meta map[string]string) error
 ```    
-更新一个已经存在的object的附加meta信息 meta 格式举例： 
+更新一个已经存在的object的附加meta信息， meta格式如下： 
 
 	meta := map[string]string{"x-amz-meta-name": "sandbox", "x-amz-meta-age": "13"}
 注意：这个接口无法更新文件的基本信息，如文件的大小和类型等
 
-当object值为"/"时，设置的是对应bucket的acl
+
 
 
 ```
@@ -158,6 +167,7 @@ func (b *Bucket) SignURL(path string, expires time.Time) string
 func (b *Bucket) URL(path string) string
 ```
 
+##MULTIPART UPLOAD
 ```
 type Multi struct {
     Bucket   *Bucket
@@ -191,7 +201,7 @@ func (m *Multi) Complete(partInfo []part) error
 大文件分片上传拼接（合并）
 
 
-错误处理
+##ERROR OPERATION
 ```
 type Error struct {
     StatusCode int
