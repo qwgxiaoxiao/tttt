@@ -161,11 +161,13 @@ func (b *Bucket) Del(object string) error
 删除object
 
 ```
-func (b *Bucket) SignURL(path string, expires time.Time) string
+func (b *Bucket) SignURL(object string, expires time.Time) string
 ```
+返回下载object时，带有过期时间的URI
 ```
-func (b *Bucket) URL(path string) string
+func (b *Bucket) URL(object string) string
 ```
+返回下载object时，普通URI
 
 ##MULTIPART UPLOAD
 ```
